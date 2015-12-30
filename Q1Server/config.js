@@ -1,4 +1,5 @@
 ﻿module.exports = {
+    mongo : 'mongodb://localhost:27017',//使用mongodb数据库
     redisState: true,//是否启用Redis连接
     redis : 'redis://:jacle169@127.0.0.1:6379',
     debug : true,//生产环境下需设置为false

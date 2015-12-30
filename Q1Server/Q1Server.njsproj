@@ -32,12 +32,14 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="config.js" />
+    <Compile Include="models\User.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="run\node.exe" />
     <Content Include="run\run.bat" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="models\" />
     <Folder Include="run\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->

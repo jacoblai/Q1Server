@@ -7,6 +7,7 @@ var koa = require('koa');
 var parse = require('co-body');
 var cors = require('koa-cors');
 var limit = require('koa-better-ratelimit');
+var Promise = require('bluebird');
 var router = require('koa-router')({
     prefix: '/api'
 });
@@ -15,6 +16,8 @@ if (config.redisState) {
     var redis = new Redis(config.redis);
 }
 var app = module.exports = koa()
+
+var User = require('./models/User.js');
 
 app.use(logger());
 
@@ -27,6 +30,16 @@ if (config.limitState) {
 }
 
 app.use(cors());
+
+var mongoose = require('mongoose');
+mongoose.connect(config.mongo); // connect to our database
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback() {
+    console.log("database open ok!!");
+});
+
+console.log("Coolpy：V" + config.v);
 
 if (config.redisState) {
     redis.on('connect', function () {
@@ -61,17 +74,28 @@ router
     //if (data !== null) {
     //    console.log(data);
     //}
+    
+    var user = yield User.findOne({ name: 'google' }).exec()
+    this.body = user;
 
-    var data = yield redis.get('kkk199');
-    this.body = { key: 'kkk199', data : data };
+    //var data = yield redis.get('kkk199');
+    //this.body = { key: 'kkk199', data : data };
     //this.body = "hello world";
 })
   .post('/users', function*(next) {
     if (this.req.checkContinue) this.res.writeContinue();
     var body = yield parse.json(this, { limit: '10kb' });
     console.log(this.req.headers['u-apikey']);
-    yield redis.set("myjson", JSON.stringify(body));
+    //yield redis.set("myjson", JSON.stringify(body));
     
+    var user = new User({
+        platform: 'google'
+        , platformId: 'google'
+        , name: 'google'
+        , avatar: 'google'
+    });
+    yield Promise.promisify(user.save, user)();
+
     ////push
     //yield redis.lpush("list1", JSON.stringify(body));
     
