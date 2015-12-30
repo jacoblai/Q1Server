@@ -34,6 +34,15 @@ if (config.redisState) {
     });
 }
 
+////sub client 只能在订阅者在线的情况下才能收到消息/消息不缓存
+//var sub = new Redis(config.redis);
+//sub.subscribe('news', 'music', function (err, count) {
+//    console.log(err, count);
+//});
+//sub.on('message', function (channel, message) {
+//    console.log('Receive message %s from channel %s', message, channel);
+//});
+
 router
   .get('/', function*(next) {
     if (this.req.checkContinue) this.res.writeContinue();
@@ -42,6 +51,17 @@ router
     //    redis.set("kkk1" + i, "vvv1" + i);
     //}
     //this.body = (new Date()) - dt;
+
+    ////pub模式
+    //redis.publish('news', 'Hello world!');
+    //redis.publish('music', 'Hello again!');
+    
+    ////pop 没有值为null
+    //var data = yield redis.lpop('list1');
+    //if (data !== null) {
+    //    console.log(data);
+    //}
+
     var data = yield redis.get('kkk199');
     this.body = { key: 'kkk199', data : data };
     //this.body = "hello world";
@@ -51,6 +71,10 @@ router
     var body = yield parse.json(this, { limit: '10kb' });
     console.log(this.req.headers['u-apikey']);
     yield redis.set("myjson", JSON.stringify(body));
+    
+    ////push
+    //yield redis.lpush("list1", JSON.stringify(body));
+    
     this.body = JSON.stringify(body);
 })
   .put('/users/:id', function*(next) {
