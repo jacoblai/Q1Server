@@ -17,7 +17,7 @@ if (config.redisState) {
 }
 var app = module.exports = koa()
 
-var User = require('./models/User.js');
+var UserModel = require('./models/admin.js');
 
 app.use(logger());
 
@@ -75,7 +75,7 @@ router
     //    console.log(data);
     //}
     
-    var user = yield User.findOne({ name: 'google' }).exec()
+    var user = yield UserModel.findOne({ userId: "admin" }).exec()
     this.body = user;
 
     //var data = yield redis.get('kkk199');
@@ -86,28 +86,51 @@ router
     if (this.req.checkContinue) this.res.writeContinue();
     var body = yield parse.json(this, { limit: '10kb' });
     console.log(this.req.headers['u-apikey']);
-    //yield redis.set("myjson", JSON.stringify(body));
     
-    var user = new User({
-        platform: 'google'
-        , platformId: 'google'
-        , name: 'google'
-        , avatar: 'google'
-    });
-    yield Promise.promisify(user.save, user)();
+    var user = yield UserModel.findOne({ userId: "admin" }).exec()
+    if (user === null) {
+        var admin = new UserModel();
+        admin.userId = "admin";
+        admin.pwd = "admin";
+        admin.userName = "admin";
+        admin.email = "admin";
+        admin.qq = "admin";
+        var result = yield Promise.promisify(admin.save, admin)();
+        this.body = result;
+    } else {
+        this.body = "admin is ext...";
+    }
 
+    //yield redis.set("myjson", JSON.stringify(body));
     ////push
     //yield redis.lpush("list1", JSON.stringify(body));
     
-    this.body = JSON.stringify(body);
+    //this.body = JSON.stringify(body);
 })
   .put('/users/:id', function*(next) {
     if (this.req.checkContinue) this.res.writeContinue();
-    this.body = 'Hello ' + this.params.id + '!';
+    
+    var admin = {
+        "userId" : "guest",
+        "pwd" : "guest",
+        "userName" : "admin",
+        "email": "guest",
+        "qq": "guest"
+    }
+    delete admin.userName;
+    var result = UserModel.findOneAndUpdate({ userId: "admin" }, admin).exec();
+    result.then(function (user) {
+        this.body = user;
+    });
+    //this.body = 'Hello ' + this.params.id + '!';
 })
   .del('/users/:id', function*(nextxt) {
     if (this.req.checkContinue) this.res.writeContinue();
-    this.body = 'Hello ' + this.params.id + '!';
+    var result = UserModel.findOneAndRemove({ userId: "guest" }).exec();
+    result.then(function (user) {
+        this.body = user;
+    });
+    //this.body = 'Hello ' + this.params.id + '!';
 });
 
 app

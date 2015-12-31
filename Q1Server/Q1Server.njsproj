@@ -32,7 +32,7 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="config.js" />
-    <Compile Include="models\User.js" />
+    <Compile Include="models\admin.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="run\node.exe" />
