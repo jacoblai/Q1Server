@@ -12,12 +12,13 @@ var router = require('koa-router')({
     prefix: '/api'
 });
 var Redis = require('ioredis');
+var redis = new Redis(config.redis);
 
 var app = module.exports = koa()
 
 var UserModel = require('./models/admin.js');
 
-app.use(logger());
+//app.use(logger());
 
 if (config.limitState) {
     app.use(limit({
@@ -29,15 +30,15 @@ if (config.limitState) {
 
 app.use(cors());
 
-var mongoose = require('mongoose');
-mongoose.connect(config.mongo); 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback() {
-    console.log("database open ok!!");
-});
+//var mongoose = require('mongoose');
+//mongoose.connect(config.mongo); 
+//var db = mongoose.connection;
+//db.on('error', console.error.bind(console, 'connection error:'));
+//db.once('open', function callback() {
+//    console.log("database open ok!!");
+//});
 
-console.log("Coolpy：V" + config.v);
+//console.log("Coolpy：V" + config.v);
 
 if (config.redisState) {
     var redis = new Redis(config.redis);
@@ -55,16 +56,21 @@ if (config.redisState) {
 //    console.log('Receive message %s from channel %s', message, channel);
 //});
 
+var i = 0;
 router
   .get('/', function*(next) {
     if (this.req.checkContinue) this.res.writeContinue();
-    var redis = new Redis(config.redis);
-    var dt = new Date();
-    for (var i = 0; i < 10000; i++) {
-        redis.set("kkk1" + i, "vvv1" + i);
-    }
-    this.body = yield redis.get('kkk19999');
-    redis.end();
+    //var dt = new Date();
+    //for (var i = 0; i < 1; i++) {
+    //    redis.set("kkk1" + i, "vvv1" + i);
+    //}
+    //this.body = yield redis.get('kkk19999');
+    //redis.end();
+    
+    i++;
+    redis.set("kkk331" + i, "vvv331" + i);
+    this.status = 200;
+    this.body = i;
 
     ////pub模式
     //redis.publish('news', 'Hello world!');
