@@ -32,7 +32,7 @@ if (config.limitState) {
 app.use(cors());
 
 var mongoose = require('mongoose');
-mongoose.connect(config.mongo); // connect to our database
+mongoose.connect(config.mongo); 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() {
@@ -140,6 +140,9 @@ app
 app.on('error', function (err, ctx) {
     if (config.debug) {
         console.log('server error', err, ctx);
+    } else {
+        this.status = 404;
+        this.body = err;
     }
 });
 
