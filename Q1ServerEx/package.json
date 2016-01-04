@@ -1,0 +1,15 @@
+﻿{
+  "name": "Q1ServerEx",
+  "version": "0.0.0",
+  "description": "Q1ServerEx",
+  "main": "app.js",
+  "author": {
+    "name": "内Cool超人",
+    "email": "229292620@qq.com"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "morgan": "^1.3.2"
+  }
+}

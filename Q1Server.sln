@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1Server", "Q1Server\Q1Server.njsproj", "{E5DD6F65-526B-4C93-96B4-1ACB22981F3E}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerEx", "Q1ServerEx\Q1ServerEx.njsproj", "{14BDA7B0-E312-40DD-8B3B-0276E24A9F82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E5DD6F65-526B-4C93-96B4-1ACB22981F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5DD6F65-526B-4C93-96B4-1ACB22981F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5DD6F65-526B-4C93-96B4-1ACB22981F3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14BDA7B0-E312-40DD-8B3B-0276E24A9F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14BDA7B0-E312-40DD-8B3B-0276E24A9F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14BDA7B0-E312-40DD-8B3B-0276E24A9F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14BDA7B0-E312-40DD-8B3B-0276E24A9F82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
