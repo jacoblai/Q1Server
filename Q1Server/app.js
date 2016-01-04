@@ -11,10 +11,8 @@ var Promise = require('bluebird');
 var router = require('koa-router')({
     prefix: '/api'
 });
-if (config.redisState) {
-    var Redis = require('ioredis');
-    var redis = new Redis(config.redis);
-}
+var Redis = require('ioredis');
+
 var app = module.exports = koa()
 
 var UserModel = require('./models/admin.js');
@@ -42,6 +40,7 @@ db.once('open', function callback() {
 console.log("Coolpy：V" + config.v);
 
 if (config.redisState) {
+    var redis = new Redis(config.redis);
     redis.on('connect', function () {
         console.log(redis.status);
     });
@@ -59,11 +58,13 @@ if (config.redisState) {
 router
   .get('/', function*(next) {
     if (this.req.checkContinue) this.res.writeContinue();
-    //var dt = new Date();
-    //for (var i = 0; i < 100; i++) {
-    //    redis.set("kkk1" + i, "vvv1" + i);
-    //}
-    //this.body = (new Date()) - dt;
+    var redis = new Redis(config.redis);
+    var dt = new Date();
+    for (var i = 0; i < 10000; i++) {
+        redis.set("kkk1" + i, "vvv1" + i);
+    }
+    this.body = yield redis.get('kkk19999');
+    redis.end();
 
     ////pub模式
     //redis.publish('news', 'Hello world!');
@@ -75,8 +76,8 @@ router
     //    console.log(data);
     //}
     
-    var user = yield UserModel.findOne({ userId: "admin" }).exec()
-    this.body = user;
+    //var user = yield UserModel.findOne({ userId: "admin" }).exec()
+    //this.body = user;
 
     //var data = yield redis.get('kkk199');
     //this.body = { key: 'kkk199', data : data };
