@@ -23,7 +23,7 @@ app.use(logger());
 
 if (config.limitState) {
     app.use(limit({
-        duration: 1, 
+        duration: 10, 
         max: config.limitMax
     //blackList: ['127.0.0.1']
     }));
