@@ -1,10 +1,9 @@
 ﻿var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
+var config = require('./config.js');
 var app = express();
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,6 +23,11 @@ app.all('*', function (req, res, next) {
     if ('OPTIONS' == req.method) return res.status(200).end();
     next();
 });
+
+if (config.openLimit) {
+    var limitr = require('limitr');
+    app.use(limitr(config.limitr));
+}
 
 // get an instance of router
 var router = express.Router();

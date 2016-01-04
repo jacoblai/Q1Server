@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "Q1ServerEx",
   "version": "0.0.0",
   "description": "Q1ServerEx",
@@ -10,6 +10,7 @@
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
+    "limitr": "^0.1.0",
     "morgan": "^1.3.2"
   }
 }
