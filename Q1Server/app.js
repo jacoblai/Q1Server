@@ -12,13 +12,12 @@ var router = require('koa-router')({
     prefix: '/api'
 });
 var Redis = require('ioredis');
-var redis = new Redis(config.redis);
 
 var app = module.exports = koa()
 
 var UserModel = require('./models/admin.js');
 
-//app.use(logger());
+app.use(logger());
 
 if (config.limitState) {
     app.use(limit({
@@ -43,7 +42,7 @@ app.use(cors());
 if (config.redisState) {
     var redis = new Redis(config.redis);
     redis.on('connect', function () {
-        console.log(redis.status);
+        console.log('redis state : ' + redis.status);
     });
 }
 
@@ -56,9 +55,61 @@ if (config.redisState) {
 //    console.log('Receive message %s from channel %s', message, channel);
 //});
 
-var i = 0;
+//router.post('/rds/single/set/:key', function*(next) {
+//    if (this.req.checkContinue) this.res.writeContinue();
+//    var body = yield parse.json(this, { limit: '10mb' });
+//    redis.set(this.params.key, JSON.stringify(body));
+//    this.body = { result: 0, body : JSON.stringify(body) };
+//}).get('/rds/single/get/:key', function*(next) {
+//    if (this.req.checkContinue) this.res.writeContinue();
+//    var data = yield redis.get(this.params.key);
+//    if (data !== null) {
+//        this.body = { result: 0, body : data };
+//    } else {
+//        this.body = { result: 1, body : 'err' };
+//    }
+//}).del('/rds/single/del/:key', function*(next) {
+//    if (this.req.checkContinue) this.res.writeContinue();
+//    var data = yield redis.del(this.params.key);
+//    if (data !== null) {
+//        this.body = { result: 0, body : data };
+//    } else {
+//        this.body = { result: 1, body : 'err' };
+//    }
+//});
+
+router.post('/rds/single/push/:ln', function*(next) {
+    if (this.req.checkContinue) this.res.writeContinue();
+    var body = yield parse.json(this, { limit: '10mb' });
+    redis.lpush(this.params.ln, JSON.stringify(body));
+    this.body = { result: 0, body : JSON.stringify(body) };
+}).get('/rds/single/pop/:ln', function*(next) {
+    if (this.req.checkContinue) this.res.writeContinue();
+    var data = yield redis.rpop(this.params.ln, 0);
+    if (data !== null) {
+        this.body = { result: 0, body : data };
+    } else {
+        this.body = { result: 1, body : 'err' };
+    }
+});
+
+router.post('/rds/bulk/push/:ln', function*(next) {
+    if (this.req.checkContinue) this.res.writeContinue();
+    var body = yield parse.json(this, { limit: '10mb' });
+    if (body !== undefined && body.length !== 0) {
+        var rds = new Redis(config.redis);
+        for (var i = 0; i < body.length; i++) {
+           redis.lpush(this.params.ln, JSON.stringify(body[i]));
+        };
+        this.body = { result: 0, body : body.length };
+    } else {
+        this.body = { result: 1, body : 0 };
+    }
+});
+
+//var i = 0;
 router
-  .get('/', function*(next) {
+  .get('/single', function*(next) {
     if (this.req.checkContinue) this.res.writeContinue();
     //var dt = new Date();
     //for (var i = 0; i < 1; i++) {
@@ -67,10 +118,10 @@ router
     //this.body = yield redis.get('kkk19999');
     //redis.end();
     
-    i++;
-    redis.set("kkk331" + i, "vvv331" + i);
-    this.status = 200;
-    this.body = i;
+    //i++;
+    //redis.set("kkk331" + i, "vvv331" + i);
+    //this.status = 200;
+    //this.body = i;
 
     ////pub模式
     //redis.publish('news', 'Hello world!');
