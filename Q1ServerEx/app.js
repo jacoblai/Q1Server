@@ -20,7 +20,7 @@ app.all('*', function (req, res, next) {
     res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.set('Access-Control-Allow-Headers', 'U-ApiKey, Content-Type');
-    // res.set('Access-Control-Allow-Max-Age', 3600);
+    //res.set('Access-Control-Allow-Max-Age', 3600);
     if ('OPTIONS' == req.method) return res.status(200).end();
     next();
 });
