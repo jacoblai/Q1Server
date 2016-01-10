@@ -31,6 +31,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="apis.js" />
     <Compile Include="app.js" />
     <Compile Include="config.js" />
     <Compile Include="start.js" />

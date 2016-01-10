@@ -31,36 +31,8 @@ if (config.whitelist[0] != '0.0.0.0/0') {
     app.use(ipfilter(config.whitelist, setting));
 }
 
-// get an instance of router
-var router = express.Router();
-
-//账号管理api
-router.route('/user')
-    //Content-Type 必须为application/json
-	.post(function (req, res, next) {
-    res.json({ Error: 'userid dont use post' });
-})
-	.get(function (req, res, next) {
-    
-    var redis = new Redis('redis://:jacle169@127.0.0.1:6379');
-    var dt = new Date();
-    for (var i = 0; i < 1 * 10000; i++) {
-        redis.set('foox' + i, 'barx' + i);
-    };
-    console.log((new Date()) - dt)
-    res.json({ Error: 'userid dont use get' });
-    res.end("hello world");
-})
-
-    .put(function (req, res, next) {
-    res.json({ Error: 'userid dont use put' });
-})
-
-    .delete(function (req, res, next) {
-    res.json({ Error: 'userid dont use delete' });
-});
-
-app.use('/api', router);
+var api = require('./apis.js');
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
