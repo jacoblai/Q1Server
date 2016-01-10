@@ -25,9 +25,10 @@ app.all('*', function (req, res, next) {
     next();
 });
 
-if (config.openLimit) {
-    var limitr = require('limitr');
-    app.use(limitr(config.limitr));
+if (config.whitelist[0] != '0.0.0.0/0') {
+    var ipfilter = require('express-ipfilter');
+    var setting = { mode: 'allow', log: false, errorCode: 403, errorMessage: '' };
+    app.use(ipfilter(config.whitelist, setting));
 }
 
 // get an instance of router
