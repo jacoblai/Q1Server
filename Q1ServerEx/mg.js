@@ -99,5 +99,48 @@ module.exports = (function () {
         }
     });
     
+    router.route('/clear/:db/:coll').get(function (req, res, next) {
+        var db = req.params.db;
+        var coll = req.params.coll;
+        mongo.db(db).collection(coll).removeMany(function (err, r) {
+            if (err) {
+                res.json({ ok: 0, n : 0, err : err });
+            } else {
+                res.json(r);
+            }
+        });
+    });
+    
+    router.route('/idx/:db/:coll').post(function (req, res, next) {
+        if (req.body.hasOwnProperty('index')) {
+            if (!req.body.hasOwnProperty('options')) {
+                req.body.options = { background: true };
+            }
+            var db = req.params.db;
+            var coll = req.params.coll;
+            mongo.db(db).collection(coll).ensureIndex(req.body.index, req.body.options, function (err, indexName) {
+                if (err) {
+                    res.json({ ok: 0, n : 0, err : err });
+                } else {
+                    res.json({ ok: 1, n : 1, data: indexName });
+                }
+            });
+        } else {
+            res.json({ ok: 0, n : 0 });
+        }
+    });
+
+    router.route('/idx/:db/:coll/:idx').get(function (req, res, next) {
+        var db = req.params.db;
+        var coll = req.params.coll;
+        mongo.db(db).collection(coll).dropIndex(req.params.idx, function (err, r) {
+            if (err) {
+                res.json({ ok: 0, n : 0, err : err });
+            } else {
+                res.json(r);
+            }
+        });
+    });
+    
     return router;
 })();
