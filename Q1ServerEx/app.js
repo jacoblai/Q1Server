@@ -1,19 +1,26 @@
 ﻿var express = require('express');
+var path = require('path');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var Redis = require('ioredis');
 var config = require('./config.js');
 var app = express();
 
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
 function defaultContentTypeMiddleware(req, res, next) {
     req.headers['content-type'] = req.headers['content-type'] || 'application/json';
     next();
 }
 app.use(defaultContentTypeMiddleware);
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+if (config.debug) {
+    app.use(logger('dev'));
+}
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.all('*', function (req, res, next) {
     if (!req.get('Origin')) return next();
@@ -31,8 +38,15 @@ if (config.whitelist[0] != '0.0.0.0/0') {
     app.use(ipfilter(config.whitelist, setting));
 }
 
-var api = require('./apis.js');
-app.use('/api', api);
+if (config.redisState) {
+    var rds = require('./rds.js');
+    app.use('/rds', rds);
+}
+if (config.mongoState) {
+    var mgs = require('./mg.js');
+    app.use('/mgs', mgs);
+}
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
