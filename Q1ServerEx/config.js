@@ -1,6 +1,6 @@
 ﻿module.exports = {
     mongoState: true,
-    mongoPoolSize: 1000,
+    mongoPoolSize: 100,
     mongo : 'mongodb://localhost:27017',//使用mongodb数据库
     redisState: true,//是否启用Redis连接
     redis : 'redis://:jacle169@127.0.0.1:6379',
