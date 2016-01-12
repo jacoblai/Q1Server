@@ -1,0 +1,22 @@
+{
+  "name": "Q1ServerFsio",
+  "version": "0.0.0",
+  "description": "Q1ServerFsio",
+  "main": "app.js",
+  "author": {
+    "name": "jac",
+    "email": ""
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "express-ipfilter": "0.0.24",
+    "fs-extra": "^0.26.4",
+    "jade": "^1.11.0",
+    "mime-types": "^2.1.9",
+    "mongodb": "^2.1.3",
+    "morgan": "^1.3.2",
+    "multer": "^1.1.0",
+    "uuid": "^2.0.1"
+  }
+}
