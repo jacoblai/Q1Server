@@ -11,10 +11,6 @@ var mongodb = require('mongodb');
 var mime = require('mime-types')
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 if (config.debug) {
     app.use(logger('dev'));
 }
@@ -106,10 +102,7 @@ app.use(function (req, res, next) {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+    res.json(err);
 });
 
 var contains = function (needle) {
