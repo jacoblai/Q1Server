@@ -1,7 +1,7 @@
 ﻿var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var logger = require('morgan');
+var morgan = require('morgan');
 var crypto = require('crypto');
 var uuid = require('uuid');
 var fs = require('fs-extra');
@@ -9,10 +9,11 @@ var config = require('./config.js');
 var multer = require('multer');
 var mongodb = require('mongodb');
 var mime = require('mime-types')
+var checker = require('./checker.js');
 var app = express();
 
 if (config.debug) {
-    app.use(logger('dev'));
+    app.use(morgan('tiny'));
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,11 +34,6 @@ if (config.whitelist[0] != '0.0.0.0/0') {
     app.use(ipfilter(config.whitelist, setting));
 }
 
-var uploadpath = __dirname + "\\uploads\\";
-if (fs.ensureDirSync(uploadpath)) {
-    console.log('Created directory ' + uploadpath);
-}
-
 var MongoClient = require('mongodb').MongoClient
 var mongo;
 MongoClient.connect(config.mongo, {
@@ -52,21 +48,22 @@ MongoClient.connect(config.mongo, {
         console.log("Connect Error " + err);
     }
 });
-
+var fieldSize = 16 * 1024 * 1024;//16m 
+var chunkSize = 255 * 1024; //255k 
 var limit = {
-    fieldSize: config.fieldSize,
+    fieldSize: fieldSize,
     fieldNameSize: 1 * 1024,
     headerPairs: 1,
     fields: 1,
-    fileSize: config.fieldSize,
+    fileSize: fieldSize,
     files: 1,
     parts: 1
 };
 var storage = multer.memoryStorage();
 var filter = function fileFilter(req, file, cb) {
     var ext = path.extname(file.originalname);
-    if (!contains.call(config.fileTyps, ext)) {
-        cb(new Error('invalid file type'));
+    if (!checker.contains.call(config.fileTyps, ext)) {
+        cb(null, false);
     } else {
         cb(null, true);
     }
@@ -76,7 +73,7 @@ var router = express.Router();
 
 router.post('/api/upload', upload.single('fn'), function (req, res, next) {
     var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'),{
-        chunkSizeBytes: config.chunkSize,
+        chunkSizeBytes: chunkSize,
         bucketName: 'images'
     });
     var opt = {
@@ -87,7 +84,7 @@ router.post('/api/upload', upload.single('fn'), function (req, res, next) {
     upsm.write(req.file.buffer, "utf-8", function (err) {
         upsm.end();
     });
-    res.json({ ok : 1, n: 1, data: { id: upsm.id, md5: upsm.md5 }});
+    res.json({ ok : 1, n: 1, data: upsm.id });
 });
 
 app.use(router);
@@ -105,26 +102,5 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.json(err);
 });
-
-var contains = function (needle) {
-    var findNaN = needle !== needle;
-    var indexOf;
-    if (!findNaN && typeof Array.prototype.indexOf === 'function') {
-        indexOf = Array.prototype.indexOf;
-    } else {
-        indexOf = function (needle) {
-            var i = -1, index = -1;
-            for (i = 0; i < this.length; i++) {
-                var item = this[i];
-                if ((findNaN && item !== item) || item === needle) {
-                    index = i;
-                    break;
-                }
-            }
-            return index;
-        };
-    }
-    return indexOf.call(this, needle) > -1;
-};
 
 module.exports = app;
