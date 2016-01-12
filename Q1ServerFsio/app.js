@@ -54,18 +54,19 @@ MongoClient.connect(config.mongo, {
 });
 
 var limit = {
-    fieldSize: 10 * 1024 * 1024,//10m
+    fieldSize: config.fieldSize,
     fieldNameSize: 1 * 1024,
-    headerPairs: 1
+    headerPairs: 1,
+    fields: 1,
+    fileSize: config.fieldSize,
+    files: 1,
+    parts: 1
 };
 var storage = multer.memoryStorage();
 var filter = function fileFilter(req, file, cb) {
     var ext = path.extname(file.originalname);
     if (!contains.call(config.fileTyps, ext)) {
-        //var err = new Error('invalid file type');
-        //err.status = 400;
-        //cb(err);
-        cb(null, false);
+        cb(new Error('invalid file type'));
     } else {
         cb(null, true);
     }
@@ -74,8 +75,8 @@ var upload = multer({ storage: storage, limits: limit, fileFilter: filter });
 var router = express.Router();
 
 router.post('/api/upload', upload.single('fn'), function (req, res, next) {
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'), {
-        chunkSizeBytes: 70 * 1024, //70k
+    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'),{
+        chunkSizeBytes: config.chunkSize,
         bucketName: 'images'
     });
     var opt = {
@@ -86,7 +87,7 @@ router.post('/api/upload', upload.single('fn'), function (req, res, next) {
     upsm.write(req.file.buffer, "utf-8", function (err) {
         upsm.end();
     });
-    res.json({ ok : 1, n: 1, data: upsm.id });
+    res.json({ ok : 1, n: 1, data: { id: upsm.id, md5: upsm.md5 }});
 });
 
 app.use(router);
