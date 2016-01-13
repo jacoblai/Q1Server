@@ -11,9 +11,19 @@ module.exports = (function () {
     'use strict';
     var router = express.Router({ mergeParams: true });
     
-    router.route('/:key').post(function (req, res, next) {
-        redis.set(req.params.key, JSON.stringify(req.body));
-        res.json({ ok: 1, n : 1 });
+    router.route('/:key/:ttl?').post(function (req, res, next) {
+        if (req.params.ttl) {
+            var t = parseInt(req.params.ttl);
+            if (!isNaN(t)) {
+                redis.setex(req.params.key, req.params.ttl, JSON.stringify(req.body));
+                res.json({ ok: 1, n : 1 });
+            } else {
+                res.json({ ok: 0, n : 0, err : 'ttl is not int' });
+            }
+        } else {
+            redis.set(req.params.key, JSON.stringify(req.body));
+            res.json({ ok: 1, n : 1 });
+        }
     })
 	.get(function (req, res, next) {
         redis.get(req.params.key, function (err, data) {

@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var crypto = require('crypto');
 var uuid = require('uuid');
-var fs = require('fs-extra');
+var fs = require('fs');
 var config = require('./config.js');
 var multer = require('multer');
 var mongodb = require('mongodb');
@@ -48,22 +48,35 @@ MongoClient.connect(config.mongo, {
         console.log("Connect Error " + err);
     }
 });
-var fieldSize = 16 * 1024 * 1024;//16m 
-var chunkSize = 255 * 1024; //255k 
+
+var tmpdir = __dirname + '\\temp';
+if (!fs.existsSync(tmpdir)) {
+    fs.mkdirSync(tmpdir);
+    console.log('Create dir ' + tmpdir);
+}
+
 var limit = {
-    fieldSize: fieldSize,
+    fieldSize: config.fieldSize,
     fieldNameSize: 1 * 1024,
     headerPairs: 1,
     fields: 1,
-    fileSize: fieldSize,
+    fileSize: config.fieldSize,
     files: 1,
     parts: 1
 };
+//var storage = multer.diskStorage({
+//    destination: function (req, file, cb) {
+//        cb(null, tmpdir);
+//    },
+//    filename: function (req, file, cb) {
+//        cb(null, path.basename(file.originalname) + '.' + uuid.v4() + '.tmp');
+//    }
+//});
 var storage = multer.memoryStorage();
 var filter = function fileFilter(req, file, cb) {
     var ext = path.extname(file.originalname);
     if (!checker.contains.call(config.fileTyps, ext)) {
-        cb(null, false);
+        cb(new Error('file type error'));
     } else {
         cb(null, true);
     }
@@ -72,19 +85,24 @@ var upload = multer({ storage: storage, limits: limit, fileFilter: filter });
 var router = express.Router();
 
 router.post('/api/upload', upload.single('fn'), function (req, res, next) {
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'),{
-        chunkSizeBytes: chunkSize,
-        bucketName: 'images'
-    });
     var opt = {
-        metadata: { fieldname : req.file.fieldname, encoding : req.file.encoding }, 
+        metadata: { encoding : req.file.encoding }, 
         contentType: mime.lookup(req.file.originalname)
     }
+    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'));
     var upsm = bucket.openUploadStream(req.file.originalname, opt);
     upsm.write(req.file.buffer, "utf-8", function (err) {
         upsm.end();
     });
     res.json({ ok : 1, n: 1, data: upsm.id });
+    
+    //var upsm = bucket.openUploadStream(req.file.originalname, opt)
+    //var mfs = fs.createReadStream(req.file.path).pipe(upsm).on('error', function (error) {
+    //    res.json({ ok : 0, n: 0, err: error });
+    //}).on('finish', function () {
+    //    fs.unlinkSync(req.file.path);
+    //    res.json({ ok : 1, n: 1, data: upsm.id });
+    //});
 });
 
 app.use(router);
