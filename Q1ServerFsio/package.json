@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "body-parser": "^1.14.2",
+    "concat-stream": "^1.5.1",
     "express": "^4.13.3",
     "express-ipfilter": "0.0.24",
     "fs-extra": "^0.26.4",
