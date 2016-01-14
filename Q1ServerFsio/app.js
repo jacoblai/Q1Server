@@ -3,7 +3,6 @@ var morgan = require('morgan');
 var config = require('./config.js');
 var mongodb = require('mongodb');
 var mime = require('mime-types')
-var checker = require('./checker.js');
 var app = express();
 
 if (config.debug) {

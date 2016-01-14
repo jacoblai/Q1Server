@@ -3,16 +3,15 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <Name>Q1ServerFsIn</Name>
-    <RootNamespace>Q1ServerFsio</RootNamespace>
+    <Name>Q1ServerFsout</Name>
+    <RootNamespace>Q1ServerFsout</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>5497414e-95dd-4b7e-ad23-99fcc38a610f</ProjectGuid>
-    <ProjectHome>
-    </ProjectHome>
+    <ProjectGuid>d3fd2d65-380c-40a5-9ea8-8afb9e4bd768</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
     <StartupFile>start.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
@@ -36,7 +35,6 @@
     <Compile Include="start.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="run\node.exe" />
     <Content Include="run\run.bat" />
   </ItemGroup>
   <ItemGroup>
