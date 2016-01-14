@@ -44,14 +44,18 @@ MongoClient.connect(config.mongo, {
 app.post('/api/upload/:fn', function (req, res, next) {
     //var throttle = new Throttle(1024*1024);
     var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'));
-    var opt = { contentType: mime.lookup(req.params.fn), metadata: { auth: "user" } };
-    var uploader = bucket.openUploadStream(req.params.fn, opt);
-    req.pipe(uploader)
-    .on('error', function (err) {
-        res.json({ ok: 0, n: 0, err: err });
-    })
-    .on('finish', function () {
-        res.json({ ok: 1, n: 1, body : { fn: req.params.fn, id: uploader.id } });
+    bucket.find({ filename: req.params.fn }).toArray(function (err, files) {
+        if (files.length === 0) {
+            var opt = { contentType: mime.lookup(req.params.fn), metadata: { auth: "user" } };
+            var uploader = bucket.openUploadStream(req.params.fn, opt);
+            req.pipe(uploader).on('error', function (err) {
+                res.json({ ok: 0, n: 0, err: err });
+            }).on('finish', function () {
+                res.json({ ok: 1, n: 1, body : { fn: req.params.fn, id: uploader.id } });
+            });
+        } else {
+            res.json({ ok: 0, n: 0, err: 'file ext' });
+        }
     });
 });
 
