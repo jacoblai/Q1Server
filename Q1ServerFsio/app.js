@@ -74,6 +74,15 @@ app.post('/api/upload/form/:bucket', upload.single('fn'), function (req, res, ne
 });
 
 app.post('/api/upload/:bucket/:fn', function (req, res, next) {
+    var ext = path.extname(req.params.fn);
+    if (ext === "") {
+        res.json({ ok: 0, n: 0, err: 'file extname err' });
+        return;
+    }
+    if (!checker.contains.call(config.formfileTyps, ext)) {
+        res.json({ ok: 0, n: 0, err: 'invalid file type' });
+        return;
+    } 
     //var throttle = new Throttle(1024*1024);
     var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'), { bucketName: req.params.bucket });
     bucket.find({ filename: req.params.fn }).toArray(function (err, files) {
