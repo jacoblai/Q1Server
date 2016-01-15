@@ -40,9 +40,9 @@ MongoClient.connect(config.mongo, {
     }
 });
 
-app.post('/api/upload/:fn', function (req, res, next) {
+app.post('/api/upload/:bucket/:fn', function (req, res, next) {
     //var throttle = new Throttle(1024*1024);
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'));
+    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'), { bucketName: req.params.bucket });
     bucket.find({ filename: req.params.fn }).toArray(function (err, files) {
         if (files.length === 0) {
             var opt = { contentType: mime.lookup(req.params.fn), metadata: { auth: "user" } };
