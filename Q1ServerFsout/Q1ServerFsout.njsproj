@@ -35,6 +35,7 @@
     <Compile Include="start.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="run\node.exe" />
     <Content Include="run\run.bat" />
   </ItemGroup>
   <ItemGroup>
