@@ -9,7 +9,7 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerEx", "Q1ServerEx\Q1
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerFsIn", "Q1ServerFsio\Q1ServerFsIn.njsproj", "{5497414E-95DD-4B7E-AD23-99FCC38A610F}"
 EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerFsout", "Q1ServerFsout\Q1ServerFsout.njsproj", "{D3FD2D65-380C-40A5-9EA8-8AFB9E4BD768}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerFsout", "Q1ServerFsout\Q1ServerFsOut.njsproj", "{D3FD2D65-380C-40A5-9EA8-8AFB9E4BD768}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
