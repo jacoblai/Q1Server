@@ -1,7 +1,7 @@
 ﻿module.exports = {
     fieldSize : 1024 * 1024 * 1024,//1G,上传文件大小限制
     chunkSize : 255 * 1024, //255k 
-    fileTyps : ['.jpg', '.png', '.zip', '.iso'],
+    formfileTyps : ['.jpg', '.png', '.zip', '.iso'],
     mongoPoolSize: 100,
     mongo : 'mongodb://localhost:27017',//使用mongodb数据库
     debug : true,//生产环境下需设置为false

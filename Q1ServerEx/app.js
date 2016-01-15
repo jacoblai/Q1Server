@@ -55,7 +55,7 @@ app.use(function (req, res, next) {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-    res.json(err);
+    res.json({ ok: 0, n: 0, err: err.message });
 });
 
 module.exports = app;

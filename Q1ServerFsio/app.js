@@ -1,8 +1,12 @@
 ﻿var express = require('express');
+var path = require('path');
 var morgan = require('morgan');
 var config = require('./config.js');
 var mongodb = require('mongodb');
 var mime = require('mime-types')
+var checker = require('./checker.js');
+var multer = require('multer');
+var CombinedStream = require('combined-stream2');
 var app = express();
 
 if (config.debug) {
@@ -40,6 +44,35 @@ MongoClient.connect(config.mongo, {
     }
 });
 
+var storage = multer.memoryStorage();
+var filter = function fileFilter(req, file, cb) {
+    var ext = path.extname(file.originalname);
+    if (!checker.contains.call(config.formfileTyps, ext)) {
+        cb(new Error('invalid file type'));
+    } else {
+        cb(null, true);
+    }
+}
+var upload = multer({ storage: storage, fileFilter: filter });
+app.post('/api/upload/form/:bucket', upload.single('fn'), function (req, res, next) {
+    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'), { bucketName: req.params.bucket });
+    bucket.find({ filename: req.file.originalname }).toArray(function (err, files) {
+        if (files.length === 0) {
+            var opt = { metadata: { encoding : req.file.encoding }, contentType: mime.lookup(req.file.originalname) };
+            var uploader = bucket.openUploadStream(req.file.originalname, opt);
+            var combinedStream = CombinedStream.create();
+            combinedStream.append(req.file.buffer);
+            combinedStream.pipe(uploader).on('error', function (err) {
+                res.json({ ok: 0, n: 0, err: err });
+            }).on('finish', function () {
+                res.json({ ok: 1, n: 1, body : { fn: req.file.originalname, id: uploader.id } });
+            });
+        } else {
+            res.json({ ok: 0, n: 0, err: 'file ext' });
+        }
+    });
+});
+
 app.post('/api/upload/:bucket/:fn', function (req, res, next) {
     //var throttle = new Throttle(1024*1024);
     var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'), { bucketName: req.params.bucket });
@@ -69,7 +102,7 @@ app.use(function (req, res, next) {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-    res.json(err);
+    res.json({ ok: 0, n: 0, err: err.message });
 });
 
 module.exports = app;
