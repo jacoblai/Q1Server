@@ -56,7 +56,7 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
   console.log('Message Recieved: Topic: ', message.destinationName, '. Payload: ', message.payloadString, '. QoS: ', message.qos);
   console.log(message);
-  var messageTime = new Date().toISOString();
+  var messageTime = new Date().toLocaleString();
   // Insert into History Table
   var table = document.getElementById("incomingMessageTable").getElementsByTagName('tbody')[0];
   var row = table.insertRow(0);
