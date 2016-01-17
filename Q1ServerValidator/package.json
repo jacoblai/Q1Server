@@ -1,0 +1,13 @@
+{
+  "name": "Q1ServerValidator",
+  "version": "0.0.0",
+  "description": "Q1ServerValidator",
+  "main": "app.js",
+  "author": {
+    "name": "jac",
+    "email": ""
+  },
+  "dependencies": {
+    "tv4": "^1.2.7"
+  }
+}

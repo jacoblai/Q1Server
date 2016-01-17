@@ -1,0 +1,14 @@
+{
+  "name": "Q1ServerMqtt",
+  "version": "0.0.0",
+  "description": "Q1ServerMqtt",
+  "main": "app.js",
+  "author": {
+    "name": "jac",
+    "email": ""
+  },
+  "dependencies": {
+    "mosca": "^0.32.1",
+    "mows": "0.0.6"
+  }
+}
