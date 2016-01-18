@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DFFC4F8B-9B42-4060-9987-068C85B86160}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JsonViewEditor</RootNamespace>
+    <AssemblyName>JsonViewEditor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="filereader.js" />
+    <Content Include="FileSaver.js" />
+    <Content Include="packages.config" />
+    <Content Include="jsoneditor\.gitignore" />
+    <Content Include="jsoneditor\.npmignore" />
+    <Content Include="jsoneditor\bower.json" />
+    <Content Include="jsoneditor\CONTRIBUTING.md" />
+    <Content Include="jsoneditor\dist\jsoneditor-minimalist.map" />
+    <Content Include="jsoneditor\dist\jsoneditor.map" />
+    <Content Include="jsoneditor\dist\which files do I need.md" />
+    <Content Include="jsoneditor\docs\api.md" />
+    <Content Include="jsoneditor\docs\shortcut_keys.md" />
+    <Content Include="jsoneditor\docs\usage.md" />
+    <Content Include="jsoneditor\HISTORY.md" />
+    <Content Include="jsoneditor\LICENSE" />
+    <Content Include="jsoneditor\misc\how_to_publish.md" />
+    <Content Include="jsoneditor\NOTICE" />
+    <Content Include="jsoneditor\package.json" />
+    <Content Include="jsoneditor\README.md" />
+    <Content Include="jsoneditor\src\docs\which files do I need.md" />
+    <Content Include="jsoneditor\src\js\assets\jsonlint\README.md" />
+    <Content Include="jsoneditor\test\largefile.json" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="index.html" />
+    <Content Include="jsoneditor\dist\img\jsoneditor-icons.svg" />
+    <Content Include="jsoneditor\dist\jsoneditor-minimalist.js" />
+    <Content Include="jsoneditor\dist\jsoneditor-minimalist.min.js" />
+    <Content Include="jsoneditor\dist\jsoneditor.css" />
+    <Content Include="jsoneditor\dist\jsoneditor.js" />
+    <Content Include="jsoneditor\dist\jsoneditor.min.css" />
+    <Content Include="jsoneditor\dist\jsoneditor.min.js" />
+    <Content Include="jsoneditor\examples\01_basic_usage.html" />
+    <Content Include="jsoneditor\examples\02_viewer.html" />
+    <Content Include="jsoneditor\examples\03_switch_mode.html" />
+    <Content Include="jsoneditor\examples\04_load_and_save.html" />
+    <Content Include="jsoneditor\examples\05_custom_fields_editable.html" />
+    <Content Include="jsoneditor\examples\06_custom_styling.html" />
+    <Content Include="jsoneditor\examples\07_json_schema_validation.html" />
+    <Content Include="jsoneditor\examples\css\darktheme.css" />
+    <Content Include="jsoneditor\examples\requirejs_demo\requirejs_demo.html" />
+    <Content Include="jsoneditor\examples\requirejs_demo\scripts\main.js" />
+    <Content Include="jsoneditor\examples\requirejs_demo\scripts\require.js" />
+    <Content Include="jsoneditor\gulpfile.js" />
+    <Content Include="jsoneditor\index.js" />
+    <Content Include="jsoneditor\misc\codeeditor.png" />
+    <Content Include="jsoneditor\misc\jsoneditor.png" />
+    <Content Include="jsoneditor\misc\todo.txt" />
+    <Content Include="jsoneditor\src\css\contextmenu.css" />
+    <Content Include="jsoneditor\src\css\img\description.txt" />
+    <Content Include="jsoneditor\src\css\img\jsoneditor-icons.svg" />
+    <Content Include="jsoneditor\src\css\jsoneditor.css" />
+    <Content Include="jsoneditor\src\css\menu.css" />
+    <Content Include="jsoneditor\src\css\searchbox.css" />
+    <Content Include="jsoneditor\src\js\ace\index.js" />
+    <Content Include="jsoneditor\src\js\ace\theme-jsoneditor.js" />
+    <Content Include="jsoneditor\src\js\appendNodeFactory.js" />
+    <Content Include="jsoneditor\src\js\assets\jsonlint\jsonlint.js" />
+    <Content Include="jsoneditor\src\js\ContextMenu.js" />
+    <Content Include="jsoneditor\src\js\header.js" />
+    <Content Include="jsoneditor\src\js\Highlighter.js" />
+    <Content Include="jsoneditor\src\js\History.js" />
+    <Content Include="jsoneditor\src\js\JSONEditor.js" />
+    <Content Include="jsoneditor\src\js\modeswitcher.js" />
+    <Content Include="jsoneditor\src\js\Node.js" />
+    <Content Include="jsoneditor\src\js\SearchBox.js" />
+    <Content Include="jsoneditor\src\js\textmode.js" />
+    <Content Include="jsoneditor\src\js\treemode.js" />
+    <Content Include="jsoneditor\src\js\util.js" />
+    <Content Include="jsoneditor\test\couchdbeditor.html" />
+    <Content Include="jsoneditor\test\test_build.html" />
+    <Content Include="jsoneditor\test\test_build_min.html" />
+    <Content Include="jsoneditor\test\test_minimalist_min.html" />
+    <Content Include="jsoneditor\test\test_schema.html" />
+    <Content Include="jsoneditor\test\util.test.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4163</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:4163/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
