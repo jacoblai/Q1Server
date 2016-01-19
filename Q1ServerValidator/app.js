@@ -1,15 +1,13 @@
-﻿var fs = require('fs');
-var tv4 = require('tv4');
-var pt = __dirname + "\\document.json";
-var schema = JSON.parse(fs.readFileSync(pt, 'utf8'));
-var data1 = {
-    users: [
-        { id: 1, username: "davidwalsh", numPosts: 404, realName: "David Walsh" },
-        { id: 2, username: "russianprince", numPosts: 12, realName: "Andrei Arshavin" }
-    ]
-};
-var data2 = [true, 123];
+﻿var isvalid = require('isvalid');
 
-console.log("data 1: " + tv4.validate(data1, schema)); // true
-console.log("data 2: " + tv4.validate(data2, schema)); // false
-//console.log("data 2 error: " + JSON.stringify(tv4.error, null, 4));
+var inputData = { user: "jacob", pass: "pwd", localction: [{ lat: 'aa', lon: 'bb' }], ptime:'2012-03-15T16:13:14'};
+
+var schema = require('./schema.js');
+
+isvalid(inputData, schema , function (err, validData) {
+    /*
+    err:       Error describing invalid data.
+    validData: The validated data.
+    */
+});
+
