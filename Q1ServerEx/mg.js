@@ -1,4 +1,5 @@
 ﻿var express = require('express');
+var basicAuth = require('basic-auth');
 var config = require('./config.js');
 var MongoClient = require('mongodb').MongoClient
 var mongo;
@@ -17,9 +18,26 @@ MongoClient.connect(config.mongo, {
 
 module.exports = (function () {
     'use strict';
-    var router = express.Router({ mergeParams: true });
     
-    router.route('/add/:db/:coll').post(function (req, res, next) {
+    var auth = function (req, res, next) {
+        function unauthorized(res) {
+            res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+            return res.sendStatus(401);
+        };
+        var user = basicAuth(req);
+        if (!user || !user.name || !user.pass) {
+            return unauthorized(res);
+        };
+        if (user.name === 'foo' && user.pass === 'bar') {
+            return next();
+        } else {
+            return unauthorized(res);
+        };
+    };
+
+    var router = express.Router({ mergeParams: true });    
+    
+    router.route('/add/:db/:coll').post(auth, function (req, res, next) {
         if (Array.isArray(req.body)) {
             mongo.db(req.params.db).collection(req.params.coll).insertMany(req.body, function (err, r) {
                 if (err) {

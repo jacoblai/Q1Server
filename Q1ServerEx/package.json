@@ -8,6 +8,7 @@
     "email": "229292620@qq.com"
   },
   "dependencies": {
+    "basic-auth": "^1.0.3",
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
     "express-ipfilter": "0.0.24",
