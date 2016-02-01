@@ -11,13 +11,9 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerFsIn", "Q1ServerFsi
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerFsOut", "Q1ServerFsout\Q1ServerFsOut.njsproj", "{D3FD2D65-380C-40A5-9EA8-8AFB9E4BD768}"
 EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerValidator", "Q1ServerValidator\Q1ServerValidator.njsproj", "{CE5FD77D-C5CE-4707-8A18-843907AC3064}"
-EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerMqtt", "Q1ServerMqtt\Q1ServerMqtt.njsproj", "{37FF3933-FB79-4092-8BEB-39AF3A6F71B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttWebClient", "MqttWebClient\MqttWebClient.csproj", "{AB3F3F11-A1FE-4789-90C6-2A0ACB5BEDCB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonViewEditor", "JsonViewEditor\JsonViewEditor.csproj", "{DFFC4F8B-9B42-4060-9987-068C85B86160}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +37,6 @@ Global
 		{D3FD2D65-380C-40A5-9EA8-8AFB9E4BD768}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3FD2D65-380C-40A5-9EA8-8AFB9E4BD768}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3FD2D65-380C-40A5-9EA8-8AFB9E4BD768}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE5FD77D-C5CE-4707-8A18-843907AC3064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE5FD77D-C5CE-4707-8A18-843907AC3064}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE5FD77D-C5CE-4707-8A18-843907AC3064}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE5FD77D-C5CE-4707-8A18-843907AC3064}.Release|Any CPU.Build.0 = Release|Any CPU
 		{37FF3933-FB79-4092-8BEB-39AF3A6F71B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37FF3933-FB79-4092-8BEB-39AF3A6F71B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37FF3933-FB79-4092-8BEB-39AF3A6F71B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,10 +45,6 @@ Global
 		{AB3F3F11-A1FE-4789-90C6-2A0ACB5BEDCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB3F3F11-A1FE-4789-90C6-2A0ACB5BEDCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB3F3F11-A1FE-4789-90C6-2A0ACB5BEDCB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFFC4F8B-9B42-4060-9987-068C85B86160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFFC4F8B-9B42-4060-9987-068C85B86160}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFFC4F8B-9B42-4060-9987-068C85B86160}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFFC4F8B-9B42-4060-9987-068C85B86160}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
