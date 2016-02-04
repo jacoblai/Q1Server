@@ -37,7 +37,7 @@ module.exports = (function () {
 
     var router = express.Router({ mergeParams: true });    
     
-    router.route('/add/:db/:coll').post(auth, function (req, res, next) {
+    router.route('/add/:db/:coll').post(function (req, res, next) {
         if (Array.isArray(req.body)) {
             mongo.db(req.params.db).collection(req.params.coll).insertMany(req.body, function (err, r) {
                 if (err) {
@@ -51,7 +51,7 @@ module.exports = (function () {
         }
     });
     
-    router.route('/update/:db/:coll').post(function (req, res, next) {
+    router.route('/update/:db/:coll').post(auth, function (req, res, next) {
         if (req.body.hasOwnProperty('filter') && req.body.hasOwnProperty('update')) {
             var db = req.params.db;
             var coll = req.params.coll;
