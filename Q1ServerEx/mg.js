@@ -117,6 +117,31 @@ module.exports = (function () {
         }
     });
     
+    //权限测试
+    router.route('/search/role/:db/:coll/:skip/:limit').post(function (req, res, next) {
+        if (req.body.hasOwnProperty('filter')) {
+            var db = req.params.db;
+            var coll = req.params.coll;
+            var skip = parseInt(req.params.skip, 10);
+            var limit = parseInt(req.params.limit, 10);
+            //设置权限返回内容
+            var role = { _id: false, Pwd: true, Ukey: true };
+            if (isNaN(skip) || isNaN(limit)) {
+                res.json({ ok: 0, n : 0, err: "params type err" });
+            } else {
+                mongo.db(db).collection(coll).find(req.body.filter, role).skip(skip).limit(limit).toArray(function (err, r) {
+                    if (err) {
+                        res.json({ ok: 0, n : 0, err : err });
+                    } else {
+                        res.json({ ok: 1, n : r.length, data: r });
+                    }
+                });
+            }
+        } else {
+            res.json({ ok: 0, n : 0 });
+        }
+    });
+    
     router.route('/clear/:db/:coll').get(function (req, res, next) {
         var db = req.params.db;
         var coll = req.params.coll;
