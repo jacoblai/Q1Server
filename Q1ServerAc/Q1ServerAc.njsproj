@@ -38,8 +38,10 @@
     <Compile Include="models\UserInfo.js" />
     <Compile Include="user.js" />
     <Compile Include="start.js" />
+    <Content Include="1_Full.txt" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="用户验证中心.vsdx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />

@@ -10,8 +10,12 @@ var userInfo = require('./models/UserInfo.js');
 module.exports = (function () {
     'use strict';
     var router = express.Router({ mergeParams: true });
-    
-    router.route('/user/token').get(function (req, res, next){
+    function unauthorized(res) {
+        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+        return res.sendStatus(401);
+    };
+    //用户登陆并取得token
+    router.route('/user/login').get(function (req, res, next){
         //当系统还没有admin超级管理员账号时系统自动构建一个
         mongo().findOne({ userId: 'admin' }, function (err, doc) {
             if (!err) {
@@ -29,16 +33,17 @@ module.exports = (function () {
                 }
             }
         });
-        function unauthorized(res) {
-            res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-            return res.sendStatus(401);
-        };
+        //使用basic身份验证方式
         var user = basicAuth(req);
         if (!user || !user.name || !user.pass) {
             return unauthorized(res);
         };
+        //用户名密码验证
         mongo().findOne({ userId: user.name, pwd: user.pass }, function (err, doc) {
             if (!err && doc !== null) {
+                delete doc._id;
+                delete doc.pwd;
+                //token服务器验证
                 redis().keys('*:' + doc.userId, function (err, tks){
                     if (tks.length === 0) {
                         var token = uuid.v4();
@@ -56,64 +61,58 @@ module.exports = (function () {
         });        
     })
 
-    router.route('/:key/:ttl?').post(function (req, res, next) {
-        if (req.params.ttl) {
-            var t = parseInt(req.params.ttl);
-            if (!isNaN(t)) {
-                redis.setex(req.params.key, req.params.ttl, JSON.stringify(req.body));
-                res.json({ ok: 1, n : 1 });
-            } else {
-                res.json({ ok: 0, n : 0, err : 'ttl is not int' });
-            }
+    //刷新token超时时间
+    router.route('/user/ref').get(function (req, res, next){
+        var token = req.get('token');
+        if (token !== undefined && token !== null && token !== '') {
+            redis().keys(token + ':*', function (err, tks) {
+                if (tks.length === 1) {
+                    redis().expire(tks[0], config.tokenex);
+                    res.json({ ok: 1, token: token, expire: config.tokenex + 's' });
+                } else {
+                    res.json({ ok: 0, err: 'key not ext' });
+                }
+            })
         } else {
-            redis.set(req.params.key, JSON.stringify(req.body));
-            res.json({ ok: 1, n : 1 });
+            return unauthorized(res);
         }
     })
-	.get(function (req, res, next) {
-        redis.get(req.params.key, function (err, data) {
-            if (data !== null) {
-                res.json({ ok: 1, n : 1, body : JSON.parse(data) });
-            } else {
-                res.json({ ok: 0, n : 0, err: err });
-            }
-        });
-    })
-    .delete(function (req, res, next) {
-        redis.del(req.params.key, function (err, data) { 
-            if (data !== null) {
-                res.json({ ok: 1, n : 1 });
-            } else {
-                res.json({ ok: 0, n : 0, err: err });
-            }
-        });
-    });
-    
-    router.route('/list/:ln').post(function (req, res, next) {
-        redis.lpush(req.params.ln, JSON.stringify(req.body));
-        res.json({ ok: 1, n: 1, body : req.body });
-    })
-	.get(function (req, res, next) {
-        redis.rpop(req.params.ln, function (err, data) { 
-            if (data !== null) {
-                res.json({ ok: 1, n : 1, body : JSON.parse(data) });
-            } else {
-                res.json({ ok: 0, n : 0, err: err });
-            }
-        });
-    });
-    
-    router.route('/list/bulk/:ln').post(function (req, res, next) {
-        if (Array.isArray(req.body)) { 
-            var rds = new Redis(config.redis);
-            for (var i = 0; i < req.body.length; i++) {
-                redis.lpush(req.params.ln, JSON.stringify(req.body[i]));
-            };
-            res.json({ ok: 1, n : req.body.length });
+
+    //注销token
+    router.route('/user/exp').get(function (req, res, next) {
+        var token = req.get('token');
+        if (token !== undefined && token !== null && token !== '') {
+            redis().keys(token + ':*', function (err, tks) {
+                if (tks.length === 1) {
+                    redis().del(tks[0], function (err, data) {
+                        res.json({ ok: 1, token: token, result: 'token was del' });
+                    });
+                } else {
+                    res.json({ ok: 0, err: 'key not ext' });
+                }
+            })
         } else {
-            res.json({ ok: 0, n : 0, err : 'only arrays' });
+            return unauthorized(res);
         }
-    });
-    
+    })
+
+    //资源服务器验证token并取得用户资料
+    router.route('/user/ver').get(function (req, res, next) {
+        var token = req.get('token');
+        if (token !== undefined && token !== null && token !== '') {
+            redis().keys(token + ':*', function (err, tks) {
+                if (tks.length === 1) {
+                    redis().get(tks[0], function (err, data) {
+                        res.json({ ok: 1, token: token, info: JSON.parse(data) });
+                    });
+                } else {
+                    res.json({ ok: 0, err: 'key not ext' });
+                }
+            })
+        } else {
+            return unauthorized(res);
+        }
+    })
+
     return router;
 })();

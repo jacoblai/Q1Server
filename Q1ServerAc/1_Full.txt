@@ -1,0 +1,80 @@
+GET http://localhost:8080/api/user/login HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 0
+Authorization: Basic YWRtaW46YWRtaW4=
+
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 72
+ETag: W/"48-KltsckM8dG/gLuCXyPnMCw"
+Date: Fri, 13 May 2016 12:58:01 GMT
+Connection: keep-alive
+
+{"ok":1,"token":"f5dfd18d-feaa-4d68-80a2-da8f49959e02","expire":"1200s"}
+
+------------------------------------------------------------------
+
+GET http://localhost:8080/api/user/ver HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 0
+token: f5dfd18d-feaa-4d68-80a2-da8f49959e02
+
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 81
+ETag: W/"51-f6DTQVuxgdk2aGIJwTjLUQ"
+Date: Fri, 13 May 2016 12:58:15 GMT
+Connection: keep-alive
+
+{"ok":1,"token":"f5dfd18d-feaa-4d68-80a2-da8f49959e02","info":{"userId":"admin"}}
+
+------------------------------------------------------------------
+
+GET http://localhost:8080/api/user/ref HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 0
+token: f5dfd18d-feaa-4d68-80a2-da8f49959e02
+
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 72
+ETag: W/"48-KltsckM8dG/gLuCXyPnMCw"
+Date: Fri, 13 May 2016 12:58:26 GMT
+Connection: keep-alive
+
+{"ok":1,"token":"f5dfd18d-feaa-4d68-80a2-da8f49959e02","expire":"1200s"}
+
+------------------------------------------------------------------
+
+GET http://localhost:8080/api/user/exp HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 0
+token: f5dfd18d-feaa-4d68-80a2-da8f49959e02
+
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 80
+ETag: W/"50-302f3AyA7YWCeDVTzCCe8g"
+Date: Fri, 13 May 2016 12:58:38 GMT
+Connection: keep-alive
+
+{"ok":1,"token":"f5dfd18d-feaa-4d68-80a2-da8f49959e02","result":"token was del"}
+
+------------------------------------------------------------------
+
