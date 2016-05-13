@@ -1,11 +1,11 @@
 {
-  "name": "Q1ServerEx",
+  "name": "Q1ServerAc",
   "version": "0.0.0",
-  "description": "Q1ServerEx",
+  "description": "Q1ServerAc",
   "main": "app.js",
   "author": {
-    "name": "内Cool超人",
-    "email": "229292620@qq.com"
+    "name": "jac",
+    "email": ""
   },
   "dependencies": {
     "basic-auth": "^1.0.3",
@@ -13,7 +13,9 @@
     "express": "^4.13.3",
     "express-ipfilter": "0.0.24",
     "ioredis": "^2.0.0-rc2",
+    "isvalid": "^1.3.5",
     "mongodb": "^2.1.3",
-    "morgan": "^1.3.2"
+    "morgan": "^1.3.2",
+    "uuid": "^2.0.1"
   }
 }

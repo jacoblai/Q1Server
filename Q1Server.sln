@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1Server", "Q1Server\Q1Server.njsproj", "{E5DD6F65-526B-4C93-96B4-1ACB22981F3E}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerMqtt", "Q1ServerMqtt\Q1ServerMqtt.njsproj", "{37FF3933-FB79-4092-8BEB-39AF3A6F71B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttWebClient", "MqttWebClient\MqttWebClient.csproj", "{AB3F3F11-A1FE-4789-90C6-2A0ACB5BEDCB}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerAc", "Q1ServerAc\Q1ServerAc.njsproj", "{066DC913-29A1-473B-B88A-E488650F2467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AB3F3F11-A1FE-4789-90C6-2A0ACB5BEDCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB3F3F11-A1FE-4789-90C6-2A0ACB5BEDCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB3F3F11-A1FE-4789-90C6-2A0ACB5BEDCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{066DC913-29A1-473B-B88A-E488650F2467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{066DC913-29A1-473B-B88A-E488650F2467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{066DC913-29A1-473B-B88A-E488650F2467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{066DC913-29A1-473B-B88A-E488650F2467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
