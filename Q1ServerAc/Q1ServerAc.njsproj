@@ -32,10 +32,12 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="config.js" />
+    <Compile Include="Controller\UserController.js" />
     <Compile Include="func\auth.js" />
     <Compile Include="func\mongo.js" />
     <Compile Include="func\redis.js" />
     <Compile Include="models\UserInfo.js" />
+    <Compile Include="mtoken.js" />
     <Compile Include="user.js" />
     <Compile Include="start.js" />
     <Content Include="1_Full.txt" />
@@ -46,6 +48,35 @@
   <ItemGroup>
     <Folder Include="models\" />
     <Folder Include="func\" />
+    <Folder Include="Controller\" />
+    <Folder Include="typings\" />
+    <Folder Include="typings\basic-auth\" />
+    <Folder Include="typings\body-parser\" />
+    <Folder Include="typings\deep-extend\" />
+    <Folder Include="typings\express-serve-static-core\" />
+    <Folder Include="typings\express\" />
+    <Folder Include="typings\ioredis\" />
+    <Folder Include="typings\mime\" />
+    <Folder Include="typings\mongodb\" />
+    <Folder Include="typings\morgan\" />
+    <Folder Include="typings\node\" />
+    <Folder Include="typings\serve-static\" />
+    <Folder Include="typings\uuid\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="typings\basic-auth\basic-auth.d.ts" />
+    <TypeScriptCompile Include="typings\body-parser\body-parser.d.ts" />
+    <TypeScriptCompile Include="typings\deep-extend\deep-extend.d.ts" />
+    <TypeScriptCompile Include="typings\express-serve-static-core\express-serve-static-core.d.ts" />
+    <TypeScriptCompile Include="typings\express\express.d.ts" />
+    <TypeScriptCompile Include="typings\ioredis\ioredis.d.ts" />
+    <TypeScriptCompile Include="typings\mime\mime.d.ts" />
+    <TypeScriptCompile Include="typings\mongodb\mongodb.d.ts" />
+    <TypeScriptCompile Include="typings\morgan\morgan.d.ts" />
+    <TypeScriptCompile Include="typings\node\node.d.ts" />
+    <TypeScriptCompile Include="typings\serve-static\serve-static.d.ts" />
+    <TypeScriptCompile Include="typings\tsd.d.ts" />
+    <TypeScriptCompile Include="typings\uuid\UUID.d.ts" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

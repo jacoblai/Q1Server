@@ -34,8 +34,10 @@ if (config.whitelist[0] != '0.0.0.0/0') {
     app.use(ipfilter(config.whitelist, setting));
 }
 
+var mtoken = require('./mtoken.js');
+app.use('/api/token', mtoken);
 var user = require('./user.js');
-app.use('/api', user);
+app.use('/api/user', user);
 
 
 // catch 404 and forward to error handler

@@ -41,6 +41,26 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="run\" />
+    <Folder Include="typings\" />
+    <Folder Include="typings\body-parser\" />
+    <Folder Include="typings\express-serve-static-core\" />
+    <Folder Include="typings\express\" />
+    <Folder Include="typings\mime\" />
+    <Folder Include="typings\mongodb\" />
+    <Folder Include="typings\morgan\" />
+    <Folder Include="typings\node\" />
+    <Folder Include="typings\serve-static\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="typings\body-parser\body-parser.d.ts" />
+    <TypeScriptCompile Include="typings\express-serve-static-core\express-serve-static-core.d.ts" />
+    <TypeScriptCompile Include="typings\express\express.d.ts" />
+    <TypeScriptCompile Include="typings\mime\mime.d.ts" />
+    <TypeScriptCompile Include="typings\mongodb\mongodb.d.ts" />
+    <TypeScriptCompile Include="typings\morgan\morgan.d.ts" />
+    <TypeScriptCompile Include="typings\node\node.d.ts" />
+    <TypeScriptCompile Include="typings\serve-static\serve-static.d.ts" />
+    <TypeScriptCompile Include="typings\tsd.d.ts" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
