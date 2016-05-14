@@ -1,4 +1,4 @@
-GET http://localhost:8080/api/user/login HTTP/1.1
+GET http://localhost:8080/api/token/login HTTP/1.1
 User-Agent: Fiddler
 Host: localhost:8080
 content-type: application/json
@@ -10,71 +10,158 @@ HTTP/1.1 200 OK
 X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
 Content-Length: 72
-ETag: W/"48-KltsckM8dG/gLuCXyPnMCw"
-Date: Fri, 13 May 2016 12:58:01 GMT
+ETag: W/"48-exU3umu1PlRyb+c2ZIDnFQ"
+Date: Sat, 14 May 2016 04:10:50 GMT
 Connection: keep-alive
 
-{"ok":1,"token":"f5dfd18d-feaa-4d68-80a2-da8f49959e02","expire":"1200s"}
+{"ok":1,"token":"7a83398f-c502-4059-8205-b3883d6ba0d3","expire":"1200s"}
 
 ------------------------------------------------------------------
 
-GET http://localhost:8080/api/user/ver HTTP/1.1
+GET http://localhost:8080/api/token/ref HTTP/1.1
 User-Agent: Fiddler
 Host: localhost:8080
 content-type: application/json
 Content-Length: 0
-token: f5dfd18d-feaa-4d68-80a2-da8f49959e02
-
-
-HTTP/1.1 200 OK
-X-Powered-By: Express
-Content-Type: application/json; charset=utf-8
-Content-Length: 81
-ETag: W/"51-f6DTQVuxgdk2aGIJwTjLUQ"
-Date: Fri, 13 May 2016 12:58:15 GMT
-Connection: keep-alive
-
-{"ok":1,"token":"f5dfd18d-feaa-4d68-80a2-da8f49959e02","info":{"userId":"admin"}}
-
-------------------------------------------------------------------
-
-GET http://localhost:8080/api/user/ref HTTP/1.1
-User-Agent: Fiddler
-Host: localhost:8080
-content-type: application/json
-Content-Length: 0
-token: f5dfd18d-feaa-4d68-80a2-da8f49959e02
+token: 7a83398f-c502-4059-8205-b3883d6ba0d3
 
 
 HTTP/1.1 200 OK
 X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
 Content-Length: 72
-ETag: W/"48-KltsckM8dG/gLuCXyPnMCw"
-Date: Fri, 13 May 2016 12:58:26 GMT
+ETag: W/"48-exU3umu1PlRyb+c2ZIDnFQ"
+Date: Sat, 14 May 2016 04:11:38 GMT
 Connection: keep-alive
 
-{"ok":1,"token":"f5dfd18d-feaa-4d68-80a2-da8f49959e02","expire":"1200s"}
+{"ok":1,"token":"7a83398f-c502-4059-8205-b3883d6ba0d3","expire":"1200s"}
 
 ------------------------------------------------------------------
 
-GET http://localhost:8080/api/user/exp HTTP/1.1
+GET http://localhost:8080/api/token/ver HTTP/1.1
 User-Agent: Fiddler
 Host: localhost:8080
 content-type: application/json
 Content-Length: 0
-token: f5dfd18d-feaa-4d68-80a2-da8f49959e02
+token: 7a83398f-c502-4059-8205-b3883d6ba0d3
+
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 100
+ETag: W/"64-FOdE5I+VEmzHcPsDPUP0lA"
+Date: Sat, 14 May 2016 04:12:09 GMT
+Connection: keep-alive
+
+{"ok":1,"token":"7a83398f-c502-4059-8205-b3883d6ba0d3","info":{"userId":"admin","userName":"jacob"}}
+
+------------------------------------------------------------------
+
+GET http://localhost:8080/api/token/exp HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 0
+token: 7a83398f-c502-4059-8205-b3883d6ba0d3
 
 
 HTTP/1.1 200 OK
 X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
 Content-Length: 80
-ETag: W/"50-302f3AyA7YWCeDVTzCCe8g"
-Date: Fri, 13 May 2016 12:58:38 GMT
+ETag: W/"50-Geul09GdpwQa+Es0aIduNA"
+Date: Sat, 14 May 2016 04:12:48 GMT
 Connection: keep-alive
 
-{"ok":1,"token":"f5dfd18d-feaa-4d68-80a2-da8f49959e02","result":"token was del"}
+{"ok":1,"token":"7a83398f-c502-4059-8205-b3883d6ba0d3","result":"token was del"}
+
+------------------------------------------------------------------
+
+POST http://localhost:8080/api/user/users HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 100
+
+{
+	"userId": "jacob5656565",
+	"pwd": "admsdsdsdsdsdsdsdsd56565656in",
+	"userName": "jacob1111"
+}
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 33
+ETag: W/"21-Kc6LPLMrI9cnH4DILBDR2A"
+Date: Sat, 14 May 2016 04:15:11 GMT
+Connection: keep-alive
+
+{"ok":1,"n":1,"result":"created"}
+
+------------------------------------------------------------------
+
+PUT http://localhost:8080/api/user/users/jacob5656565 HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 72
+Authorization: basic YWRtaW46YWRtaW4=
+
+{
+	"userId": "jjjjjjjjjj",
+	"pwd": "111",
+	"userName": "jacob1111"
+}
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 33
+ETag: W/"21-0FTzjpp052PDkYZIVCRAJQ"
+Date: Sat, 14 May 2016 06:36:16 GMT
+Connection: keep-alive
+
+{"ok":1,"n":1,"result":"updated"}
+
+------------------------------------------------------------------
+
+GET http://localhost:8080/api/user/users/jacob HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 0
+Authorization: basic YWRtaW46YWRtaW4=
+
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 62
+ETag: W/"3e-8KdMIn87AdHOzto6Q6nexw"
+Date: Sat, 14 May 2016 06:37:22 GMT
+Connection: keep-alive
+
+{"ok":0,"n":0,"obj":{"userId":"jacob","userName":"jacob1111"}}
+
+------------------------------------------------------------------
+
+DELETE http://localhost:8080/api/user/users/jjjjjjjjjj HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:8080
+content-type: application/json
+Content-Length: 0
+Authorization: basic YWRtaW46YWRtaW4=
+
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 14
+ETag: W/"e-K3Q8ylD5h1CvjWWMeFvJyA"
+Date: Sat, 14 May 2016 06:40:12 GMT
+Connection: keep-alive
+
+{"ok":1,"n":1}
 
 ------------------------------------------------------------------
 

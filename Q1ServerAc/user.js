@@ -1,10 +1,7 @@
 ﻿var express = require('express');
-var redis = require('./func/redis.js');
 var config = require('./config.js');
 var isvalid = require('isvalid');
-var deepExtend = require('deep-extend');
-var uuid = require('uuid');
-var basicAuth = require('basic-auth');
+var basicAuth = require('./func/auth.js');
 var mongo = require('./func/mongo.js');
 var userInfo = require('./models/UserInfo.js');
 var usercon = require('./Controller/UserController.js');
@@ -12,11 +9,6 @@ var usercon = require('./Controller/UserController.js');
 module.exports = (function () {
     'use strict';
     var router = express.Router({ mergeParams: true });
-    function unauthorized(res) {
-        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-        return res.sendStatus(401);
-    };
-
     //用户管理
     router.route('/users/:id?')
         .post(function (req, res, next) {
@@ -42,36 +34,40 @@ module.exports = (function () {
                 }
             });
         })
-        .put(function (req, res, next) {
-            isvalid(req.body, userInfo, function (err, validData) {
-                if (err) {
-                    res.json({ ok: 0, n: 0, err: err });
-                } else {
-                    var filter = Object();
-                    filter.userId = validData.userId;
-                    mongo().findOne(filter, function (err, doc) {
-                        if (err) {
-                            res.json({ ok: 0, n: 0, err: err });
-                        } else {
-                            if (!doc) {
-                                res.json({ ok: 0, n: 0, err: "object not exits" });
+        .put(basicAuth, function (req, res, next) {
+            if (req.params.id) {
+                isvalid(req.body, userInfo, function (err, validData) {
+                    if (err) {
+                        res.json({ ok: 0, n: 0, err: err });
+                    } else {
+                        var filter = Object();
+                        filter.userId = req.params.id;
+                        mongo().findOne(filter, function (err, doc) {
+                            if (err) {
+                                res.json({ ok: 0, n: 0, err: err });
                             } else {
-                                var update = Object();
-                                update.$set = validData;
-                                mongo().updateOne(filter, update, function (err, r) {
-                                    if (err) {
-                                        res.json({ ok: 0, n: 0, err: err });
-                                    } else {
-                                        res.json({ ok: 1, n: 1, result: 'updated' });
-                                    }
-                                });
+                                if (!doc) {
+                                    res.json({ ok: 0, n: 0, err: "object not exits" });
+                                } else {
+                                    var update = Object();
+                                    update.$set = validData;
+                                    mongo().updateOne(filter, update, function (err, r) {
+                                        if (err) {
+                                            res.json({ ok: 0, n: 0, err: err });
+                                        } else {
+                                            res.json({ ok: 1, n: 1, result: 'updated' });
+                                        }
+                                    });
+                                }
                             }
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
+            } else {
+                res.json({ ok: 0, n: 0, err: "params err" });
+            }
         })
-        .get(function (req, res, next) {
+        .get(basicAuth,function (req, res, next) {
             if (req.params.id) {
                 mongo().findOne({ 'userId': req.params.id }, function (err, doc) {
                     if (err) {
@@ -86,6 +82,8 @@ module.exports = (function () {
                         }
                     }
                 });
+            } else {
+                res.json({ ok: 0, n: 0, err: "params err" });
             }
         })
         .delete(basicAuth, function (req, res, next) {
@@ -97,12 +95,12 @@ module.exports = (function () {
                         if (!doc) {
                             res.json({ ok: 0, n: 0, err: "object not exits" });
                         } else {
-                            delete doc.pwd;
-                            delete doc._id;
-                            res.json({ ok: 0, n: 0, obj: doc });
+                            res.json(doc);
                         }
                     }
                 });
+            } else {
+                res.json({ ok: 0, n: 0, err: "params err" });
             }
         })
 

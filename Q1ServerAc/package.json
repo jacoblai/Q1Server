@@ -10,7 +10,6 @@
   "dependencies": {
     "basic-auth": "^1.0.3",
     "body-parser": "^1.14.2",
-    "deep-extend": "^0.4.1",
     "express": "^4.13.3",
     "express-ipfilter": "0.0.24",
     "ioredis": "^2.0.0-rc2",
