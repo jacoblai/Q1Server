@@ -3,6 +3,6 @@ cls
 
 echo.
 echo 
-     %cd%\node  ../start.js
+     %cd%\node --max-old-space-size=7168 ../start.js
 echo.
 pause

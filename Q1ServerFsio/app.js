@@ -55,7 +55,7 @@ var filter = function fileFilter(req, file, cb) {
 }
 var upload = multer({ storage: storage, fileFilter: filter });
 app.post('/api/upload/form/:bucket', upload.single('fn'), function (req, res, next) {
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'), { bucketName: req.params.bucket });
+    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName), { bucketName: req.params.bucket });
     bucket.find({ filename: req.file.originalname }).toArray(function (err, files) {
         if (files.length === 0) {
             var opt = { metadata: { encoding : req.file.encoding }, contentType: mime.lookup(req.file.originalname) };
@@ -82,9 +82,9 @@ app.post('/api/upload/:bucket/:fn', function (req, res, next) {
     if (!checker.contains.call(config.formfileTyps, ext)) {
         res.json({ ok: 0, n: 0, err: 'invalid file type' });
         return;
-    } 
+    }
     //var throttle = new Throttle(1024*1024);
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'), { bucketName: req.params.bucket });
+    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName), { bucketName: req.params.bucket });
     bucket.find({ filename: req.params.fn }).toArray(function (err, files) {
         if (files.length === 0) {
             var opt = { contentType: mime.lookup(req.params.fn), metadata: { auth: "user" } };
@@ -92,7 +92,7 @@ app.post('/api/upload/:bucket/:fn', function (req, res, next) {
             req.pipe(uploader).on('error', function (err) {
                 res.json({ ok: 0, n: 0, err: err });
             }).on('finish', function () {
-                res.json({ ok: 1, n: 1, body : { fn: req.params.fn, id: uploader.id } });
+                res.json({ ok: 1, n: 1, body: { fn: req.params.fn, id: uploader.id } });
             });
         } else {
             res.json({ ok: 0, n: 0, err: 'file ext' });

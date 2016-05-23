@@ -54,7 +54,7 @@ var router = express.Router();
 
 router.get('/dlfn/:fn', function (req, res, next) {
     //var throttle = new Throttle(1024*1024);
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'));
+    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName));
     bucket.find({ filename: req.params.fn }).toArray(function (err, files) {
         if (files.length > 0) {
             if (req.headers.range) {
@@ -78,7 +78,7 @@ router.get('/dlfn/:fn', function (req, res, next) {
 });
 
 router.get('/dlid/:id', function (req, res, next) {
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'));
+    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName));
     var o_id = new mongodb.ObjectID(req.params.id);
     bucket.find({ _id : o_id }).toArray(function (err, files) {
         if (files.length > 0) {
@@ -102,7 +102,7 @@ router.get('/dlid/:id', function (req, res, next) {
     });
 });
 router.get('/mg/del/:id', function (req, res, next) {
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'));
+    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName));
     var o_id = new mongodb.ObjectID(req.params.id);
     bucket.delete(o_id, function (error) {
         if (error) {
@@ -114,7 +114,7 @@ router.get('/mg/del/:id', function (req, res, next) {
 });
 
 router.get('/mg/drop', function (req, res, next) {
-    var bucket = new mongodb.GridFSBucket(mongo.db('q1fs'));
+    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName));
     bucket.drop(function (error) {
         if (error) {
             res.json({ ok: 0, n: 0, err: error });

@@ -3,7 +3,8 @@
     chunkSize : 255 * 1024, //255k 
     fileTyps : ['.jpg', '.png', '.zip', '.iso'],
     mongoPoolSize: 100,
-    mongo : 'mongodb://localhost:27017',//使用mongodb数据库
+    mongo: 'mongodb://localhost:27017',//使用mongodb数据库
+    dbName: 'q1fs',//数据库名称
     debug : true,//生产环境下需设置为false
     port: 8080,//本服务端口
     v : '1.0.0',

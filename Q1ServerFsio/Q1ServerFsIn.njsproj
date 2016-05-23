@@ -43,6 +43,7 @@
   <ItemGroup>
     <Folder Include="run\" />
     <Folder Include="typings\" />
+    <Folder Include="typings\async\" />
     <Folder Include="typings\express-serve-static-core\" />
     <Folder Include="typings\express\" />
     <Folder Include="typings\mime\" />
@@ -53,6 +54,7 @@
     <Folder Include="typings\serve-static\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="typings\async\async.d.ts" />
     <TypeScriptCompile Include="typings\express-serve-static-core\express-serve-static-core.d.ts" />
     <TypeScriptCompile Include="typings\express\express.d.ts" />
     <TypeScriptCompile Include="typings\mime\mime.d.ts" />
