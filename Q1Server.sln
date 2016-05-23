@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttWebClient", "MqttWebCli
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Q1ServerAc", "Q1ServerAc\Q1ServerAc.njsproj", "{066DC913-29A1-473B-B88A-E488650F2467}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWeb", "TestWeb\TestWeb.csproj", "{A5B596F9-77DA-47DB-9616-9BADB2685AD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{066DC913-29A1-473B-B88A-E488650F2467}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{066DC913-29A1-473B-B88A-E488650F2467}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{066DC913-29A1-473B-B88A-E488650F2467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B596F9-77DA-47DB-9616-9BADB2685AD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B596F9-77DA-47DB-9616-9BADB2685AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B596F9-77DA-47DB-9616-9BADB2685AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B596F9-77DA-47DB-9616-9BADB2685AD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

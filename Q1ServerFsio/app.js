@@ -42,38 +42,49 @@ MongoClient.connect(config.mongo, {
     } else {
         console.log("Connect Error " + err);
     }
-});
+    });
 
-var storage = multer.memoryStorage();
-var filter = function fileFilter(req, file, cb) {
-    var ext = path.extname(file.originalname);
-    if (!checker.contains.call(config.formfileTyps, ext)) {
-        cb(new Error('invalid file type'));
+function isAuth(req, res, next) {
+    // 验证
+    var ukey = req.get('U-ApiKey');
+    if (ukey === "123") {
+        next();
     } else {
-        cb(null, true);
+        res.status(412);
+        res.end();
     }
 }
-var upload = multer({ storage: storage, fileFilter: filter });
-app.post('/api/upload/form/:bucket', upload.single('fn'), function (req, res, next) {
-    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName), { bucketName: req.params.bucket });
-    bucket.find({ filename: req.file.originalname }).toArray(function (err, files) {
-        if (files.length === 0) {
-            var opt = { metadata: { encoding : req.file.encoding }, contentType: mime.lookup(req.file.originalname) };
-            var uploader = bucket.openUploadStream(req.file.originalname, opt);
-            var combinedStream = CombinedStream.create();
-            combinedStream.append(req.file.buffer);
-            combinedStream.pipe(uploader).on('error', function (err) {
-                res.json({ ok: 0, n: 0, err: err });
-            }).on('finish', function () {
-                res.json({ ok: 1, n: 1, body : { fn: req.file.originalname, id: uploader.id } });
-            });
-        } else {
-            res.json({ ok: 0, n: 0, err: 'file ext' });
-        }
-    });
-});
 
-app.post('/api/upload/:bucket/:fn', function (req, res, next) {
+//var storage = multer.memoryStorage();
+//var filter = function fileFilter(req, file, cb) {
+//    var ext = path.extname(file.originalname);
+//    if (!checker.contains.call(config.formfileTyps, ext)) {
+//        cb(new Error('invalid file type'));
+//    } else {
+//        cb(null, true);
+//    }
+//}
+//var upload = multer({ storage: storage, fileFilter: filter });
+//app.post('/api/upload/form', upload.single('fn'), function (req, res, next) {
+//    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName), { bucketName: config.bucketName });
+//    bucket.find({ filename: req.file.originalname }).toArray(function (err, files) {
+//        if (files.length === 0) {
+//            var opt = { metadata: { encoding : req.file.encoding }, contentType: mime.lookup(req.file.originalname) };
+//            var uploader = bucket.openUploadStream(req.file.originalname, opt);
+//            var combinedStream = CombinedStream.create();
+//            combinedStream.append(req.file.buffer);
+//            combinedStream.pipe(uploader).on('error', function (err) {
+//                res.json({ ok: 0, n: 0, err: err });
+//            }).on('finish', function () {
+//                res.json({ ok: 1, n: 1, body : { fn: req.file.originalname, id: uploader.id } });
+//            });
+//        } else {
+//            res.json({ ok: 0, n: 0, err: 'file ext' });
+//        }
+//    });
+//});
+
+app.post('/api/upload/:fn', isAuth, function (req, res, next) {
     var ext = path.extname(req.params.fn);
     if (ext === "") {
         res.json({ ok: 0, n: 0, err: 'file extname err' });
@@ -84,7 +95,7 @@ app.post('/api/upload/:bucket/:fn', function (req, res, next) {
         return;
     }
     //var throttle = new Throttle(1024*1024);
-    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName), { bucketName: req.params.bucket });
+    var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName), { bucketName: config.bucketName });
     bucket.find({ filename: req.params.fn }).toArray(function (err, files) {
         if (files.length === 0) {
             var opt = { contentType: mime.lookup(req.params.fn), metadata: { auth: "user" } };

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="scripts/jquery-1.6.4.js"></script>
+</head>
+<body>
+    <img src="http://localhost:8080/api/dlfn/favicon.png" />
+
+    <input id="upload1" type="file" />
+    <div id="result"></div>
+    <script type="text/javascript">
+        document.querySelector('input').addEventListener('change', function () {
+            var reader = new FileReader();
+            reader.fileName = document.querySelector('input').files[0].name;
+            reader.onload = function () {
+                var self = this;
+                var bytesArray = new Uint8Array(self.result);
+                $.ajax({
+                    url: 'http://localhost:8080/api/upload/' + self.fileName,
+                    type: 'POST',
+                    data: bytesArray,
+                    processData: false,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("U-ApiKey", "123"),
+                        xhr.setRequestHeader("Content-Type", "application/octet-stream")
+                    }
+                }).done(function (result) {
+                    alert(JSON.stringify(result));
+                }).fail(function (err) {
+                      alert(JSON.stringify(err));
+                  })
+            }
+            reader.readAsArrayBuffer(this.files[0]);
+        }, false);
+    </script>
+</body>
+</html>

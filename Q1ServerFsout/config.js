@@ -5,6 +5,7 @@
     mongoPoolSize: 100,
     mongo: 'mongodb://localhost:27017',//使用mongodb数据库
     dbName: 'q1fs',//数据库名称
+    bucketName: 'bucket1',
     debug : true,//生产环境下需设置为false
     port: 8080,//本服务端口
     v : '1.0.0',
