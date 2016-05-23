@@ -50,6 +50,17 @@ MongoClient.connect(config.mongo, {
     }
 });
 
+function isAuth(req, res, next) {
+    // 验证
+    var ukey = req.get('U-ApiKey');
+    if (ukey === "123") {
+        next();
+    } else {
+        res.status(412);
+        res.end();
+    }
+}
+
 var router = express.Router();
 
 router.get('/dlfn/:fn', function (req, res, next) {
@@ -101,7 +112,7 @@ router.get('/dlid/:id', function (req, res, next) {
         }
     });
 });
-router.get('/mg/del/:id', function (req, res, next) {
+router.get('/mg/del/:id', isAuth, function (req, res, next) {
     var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName), { bucketName: config.bucketName });
     var o_id = new mongodb.ObjectID(req.params.id);
     bucket.delete(o_id, function (error) {
@@ -113,7 +124,7 @@ router.get('/mg/del/:id', function (req, res, next) {
     });
 });
 
-router.get('/mg/drop', function (req, res, next) {
+router.get('/mg/drop', isAuth, function (req, res, next) {
     var bucket = new mongodb.GridFSBucket(mongo.db(config.dbName));
     bucket.drop(function (error) {
         if (error) {
