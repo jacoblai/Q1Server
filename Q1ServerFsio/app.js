@@ -47,7 +47,7 @@ MongoClient.connect(config.mongo, {
 function isAuth(req, res, next) {
     // 验证
     var ukey = req.get('U-ApiKey');
-    if (ukey === "123") {
+    if (ukey === config.ukey) {
         next();
     } else {
         res.status(412);
@@ -90,7 +90,7 @@ app.post('/api/upload/:fn', isAuth, function (req, res, next) {
         res.json({ ok: 0, n: 0, err: 'file extname err' });
         return;
     }
-    if (!checker.contains.call(config.formfileTyps, ext)) {
+    if (config.formfileTyps[0] !== '...' && !checker.contains.call(config.formfileTyps, ext)) {
         res.json({ ok: 0, n: 0, err: 'invalid file type' });
         return;
     }

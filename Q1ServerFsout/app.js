@@ -53,7 +53,7 @@ MongoClient.connect(config.mongo, {
 function isAuth(req, res, next) {
     // 验证
     var ukey = req.get('U-ApiKey');
-    if (ukey === "123") {
+    if (ukey === config.ukey) {
         next();
     } else {
         res.status(412);

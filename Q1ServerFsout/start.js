@@ -38,7 +38,7 @@ if (config.debug) {
             }
         });
     } else {
-        app.listen(8080);
+        app.listen(config.port);
         console.log(config.appName + ' is start with port ' + config.port + ' pid ' + cluster.worker.id);
     }
 }
